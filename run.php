@@ -17,6 +17,6 @@ $countersRegistry = new CounterRegistry(
 
 $input = file_get_contents('https://run.mocky.io/v3/2797e20d-5db5-43d7-871d-69822b9a770a');
 
-$app = new App($countersRegistry);
+$counter = new App($countersRegistry, new JsonReader());
 
-printf('Found offers: %d', $app->run(new JsonReader(), $input, $argv));
+printf('Found offers: %d', $counter->count($input, $argv));

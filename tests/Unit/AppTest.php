@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of contao.org.
+ *
+ * (c) Leo Feyer
+ *
+ * @license proprietary
+ */
+
 namespace Test\Unit;
 
 use App\App;
@@ -10,32 +20,36 @@ use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
 {
-    /** @test */
-    public function shouldReturnOffersCount(): void
+    public function testShouldReturnOffersCount(): void
     {
         $app = $this->initApp();
 
-        $result = $app->run(
-            $this->createMock(ReaderInterface::class),
+        $result = $app->count(
             '',
-            [1 => 'test']
+            [1 => 'test'],
         );
 
-        self::assertSame(5, $result);
+        $this->assertSame(5, $result);
     }
 
     private function initApp(): App
     {
         $counter = $this->createMock(CounterInterface::class);
-        $counter->method('count')->willReturn(5);
+        $counter
+            ->method('count')
+            ->willReturn(5)
+        ;
 
         $countersRegistry = $this->createMock(CounterRegistry::class);
         $countersRegistry
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('get')
             ->with('test')
-            ->willReturn($counter);
+            ->willReturn($counter)
+        ;
 
-        return new App($countersRegistry);
+        $reader = $this->createMock(ReaderInterface::class);
+
+        return new App($countersRegistry, $reader);
     }
 }

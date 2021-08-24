@@ -1,15 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of contao.org.
+ *
+ * (c) Leo Feyer
+ *
+ * @license proprietary
+ */
+
 namespace App\Offer;
 
 class Offer implements OfferInterface
 {
-    public function __construct(
-        private int $offerId,
-        private string $productTitle,
-        private int $vendorId,
-        private float $price,
-    ) {
+    public function __construct(private int $offerId, private string $productTitle, private int $vendorId, private float $price,)
+    {
     }
 
     public function gertOfferId(): int
@@ -31,5 +37,4 @@ class Offer implements OfferInterface
     {
         return $this->price;
     }
-
 }
